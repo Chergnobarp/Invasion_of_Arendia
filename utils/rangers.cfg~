@@ -1,0 +1,126 @@
+#textdomain wesnoth-Invasion_of_Arendia
+#define RANGERS_IOA
+
+	[event]
+	name=post_advance
+		[filter]
+		description=Reth
+		type=Reth-L4
+		[/filter]
+		[message]
+		speaker=Reth
+		message= _ "Now that I am experienced enough I am going to start training more rangers, continueing the tradition that Jack was following when he trained me. Now, I just need to find somebody good enough"
+		[/message]
+		[message]
+		speaker=narrator
+		message= _ "You can now recruit an apprentice for Reth, Reth can only train one apprentice at a time so the recruit option will dissapear untill training is complete. If the Apprentice dies at any time then you can always recruit another."
+		[/message]
+		[allow_recruit]
+		type=Hunter
+		side=1
+		[/allow_recruit]
+	[/event]
+
+	[event]
+	name=recruit
+		[filter]
+		type=Hunter
+		[/filter]
+		[role]
+		role=trainee
+		[/role]
+		[message]
+		speaker=Reth
+		message= _ "You'll do. First job, kill those guys over there."
+		[/message]
+		[disallow_recruit]
+		type=Hunter
+		side=1
+		[/disallow_recruit]
+	[/event]
+
+	[event]
+	name=post_advance
+		[filter]
+		type=Ranger
+		role=trainee
+		[/filter]
+		[message]
+		speaker=Reth
+		message= _ "You've learned alot since you started, but everything else is up to you.
+
+Next!"
+		[/message]
+		[allow_recruit]
+		type=Hunter
+		side=1
+		[/allow_recruit]
+	[/event]
+
+	[event]
+	name=die
+		[filter]
+		type=Hunter, Way-Watcher, Ranger
+		[/filter]
+		[message]
+		speaker=Reth
+		message= _ "Such a waste.
+
+Next!"
+		[/message]
+		[allow_recruit]
+		type=Hunter
+		side=1
+		[/allow_recruit]
+	[/event]
+
+	[event]
+	name=die
+		[filter]
+		type=Warden
+		[/filter]
+		[message]
+		speaker=Reth
+		message= _ "Damn, he was almost as good as me."
+		[/message]
+	[/event]
+
+	[event]
+	name=start
+		[if]
+			[have_unit]
+			type=Warden
+			description=Reth
+			[/have_unit]
+			[then]
+				[store_unit]
+				variable=Reth-Warden
+				kill=yes
+					[filter]
+					description=Reth
+					[/filter]
+				[/store_unit]
+				[set_variable]
+				name=Reth-Warden.type
+				value=Reth-L4
+				[/set_variable]
+				[unstore_unit]
+				variable=Reth-Warden
+				[/unstore_unit]
+				[message]
+				speaker=Reth
+				message= _ "Now that I am experienced enough I am going to start training more rangers, continueing the tradition that Jack was following when he trained me. Now, I just need to find somebody good enough"
+				[/message]
+				[message]
+				speaker=narrator
+				message= _ "You can now recruit an apprentice for Reth, Reth can only train one apprentice at a time so the recruit option will dissapear untill training is complete. If the Apprentice dies at any time then you can always recruit another."
+				[/message]
+				[allow_recruit]
+				type=Hunter
+				side=1
+				[/allow_recruit]
+			[/then]
+		[/if]
+	[/event]
+
+#enddef
